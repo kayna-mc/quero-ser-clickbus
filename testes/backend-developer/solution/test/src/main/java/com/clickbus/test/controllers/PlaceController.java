@@ -1,6 +1,10 @@
 package com.clickbus.test.controllers;
 
+import java.util.Collections;
 import java.util.List;
+
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,5 +54,16 @@ public class PlaceController {
       place.setState(updatedPlace.getState());
       return repo.save(place);
     }).orElseThrow(() -> new PlaceNotFoundException("Can't update. The id '" + id + "' doesn't exists"));
+  }
+  
+  @DeleteMapping(value = "/places/{id}", produces = "application/json")
+  public String deletePlace(@PathVariable Long id) {
+    try {
+      repo.deleteById(id);
+    } catch(EmptyResultDataAccessException e) {
+      throw new PlaceNotFoundException("The id '" + id + "' doesn't exists");
+    }
+    
+    return "{\"response\":\"The record '" + id + "' was deleted\"}";
   }
 }
