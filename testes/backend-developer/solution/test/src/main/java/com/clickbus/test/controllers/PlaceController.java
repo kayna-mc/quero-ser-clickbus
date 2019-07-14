@@ -1,6 +1,5 @@
 package com.clickbus.test.controllers;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -55,15 +54,15 @@ public class PlaceController {
       return repo.save(place);
     }).orElseThrow(() -> new PlaceNotFoundException("Can't update. The id '" + id + "' doesn't exists"));
   }
-  
+
   @DeleteMapping(value = "/places/{id}", produces = "application/json")
   public String deletePlace(@PathVariable Long id) {
     try {
       repo.deleteById(id);
-    } catch(EmptyResultDataAccessException e) {
+    } catch (EmptyResultDataAccessException e) {
       throw new PlaceNotFoundException("The id '" + id + "' doesn't exists");
     }
-    
+
     return "{\"response\":\"The record '" + id + "' was deleted\"}";
   }
 }

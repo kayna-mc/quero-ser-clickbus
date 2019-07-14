@@ -13,10 +13,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 public class Place implements Serializable {
-  
+
   private static final long serialVersionUID = 1174163393840265557L;
-  
-  @Id 
+
+  @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private String name;
